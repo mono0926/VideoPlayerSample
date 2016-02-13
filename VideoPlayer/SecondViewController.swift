@@ -16,8 +16,7 @@ class SecondViewController: AVPlayerViewController {
         super.viewDidLoad()
         
         // 動画ファイルのURLを取得
-        let moviePath = NSBundle.mainBundle().pathForResource("hogevideo", ofType: "mp4")!
-        let url = NSURL(fileURLWithPath: moviePath)
+        let url = NSURL(scheme: "http", host: "d3bsl1rterq3zk.cloudfront.net", path: "/livecf/myStream/playlist.m3u8")!
         
         // アイテム取得
         let playerItem = AVPlayerItem(URL: url)
@@ -26,7 +25,7 @@ class SecondViewController: AVPlayerViewController {
         player = AVPlayer(playerItem: playerItem)
         
         // 再生
-        player.play()
+        player?.play()
     }
 
     override func didReceiveMemoryWarning() {

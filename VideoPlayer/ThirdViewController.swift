@@ -18,10 +18,19 @@ class ThirdViewController: UIViewController {
         super.viewDidLoad()
         
         // 動画ファイルのURLを取得
-        let bundle = NSBundle.mainBundle()
-        let path = bundle.pathForResource("hogevideo", ofType: "mp4")
-        let url = NSURL(fileURLWithPath: path!)
+//        let url = NSURL(string: "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8")!
+        // どこかから拾ってきたやつ
+//        let url = NSURL(scheme: "http", host: "devimages.apple.com", path: "/iphone/samples/bipbop/bipbopall.m3u8")!
+        
+        // https://developer.apple.com/streaming/examples/
+        // なぜかhttp許容にする必要があった(SSL証明書が基準満たしてないのかな)
+//        let url = NSURL(scheme: "https", host: "devimages.apple.com.edgekey.net", path: "/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8")!
+//        let url = NSURL(scheme: "https", host: "devimages.apple.com.edgekey.net", path: "/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")!
+        
+        // CloudFormation
+        let url = NSURL(scheme: "http", host: "d3bsl1rterq3zk.cloudfront.net", path: "/livecf/myStream/playlist.m3u8")!
 
+        
         // アイテム取得
         let playerItem = AVPlayerItem(URL: url)
         
@@ -46,9 +55,12 @@ class ThirdViewController: UIViewController {
     }
 
     func didPlayerItemReachEnd(notification: NSNotification) {
+        guard let player = playerViewController.player else {
+            return
+        }
         // リピート再生
-        playerViewController.player.seekToTime(kCMTimeZero)
-        playerViewController.player.play()
+        player.seekToTime(kCMTimeZero)
+        player.play()
     }
     
     override func didReceiveMemoryWarning() {
